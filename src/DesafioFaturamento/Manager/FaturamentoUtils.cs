@@ -23,6 +23,11 @@ namespace DesafioFaturamento.Manager
             return Math.Floor(i * power) / power;
         }
 
+        public static decimal Round(decimal i, int decimalPlaces)
+        {
+            return Math.Round(i, decimalPlaces,MidpointRounding.AwayFromZero);
+        }
+
         public static MachineEventTypeEnum ParseFaturamentoType(string command)
         {
             switch (command.ToUpper())

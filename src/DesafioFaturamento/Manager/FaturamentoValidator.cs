@@ -5,6 +5,7 @@ using System.IO;
 using DesafioFaturamento.Domain;
 using System.Collections.Generic;
 using System.Linq;
+using DesafioFaturamento.Test;
 
 namespace DesafioFaturamento.Manager
 {
@@ -15,8 +16,8 @@ namespace DesafioFaturamento.Manager
 
         public static EventsInputLine ValidateInputLine(string line)
         {
-            //All validations fail will return null and not throw Exception
-            //So the program can continue ignoring the failed line
+            //Todas as validacoes que falham retornam null e nao lancam uma excecao
+            //Dessa forma o programa continua ignorando a linha que nao passou na validacao
             string[] data = line.Split(',');
 
             if (data == null || data.Length != 5)
@@ -66,7 +67,7 @@ namespace DesafioFaturamento.Manager
             var result = new EventsInputLine
             {
                 Id = id,                
-                Value = eventValue,
+                Value = FaturamentoUtils.Round(eventValue,2),
                 Type = faturamentoType,
                 EventBeginDate = eventBeginDate,
                 EventEndDate =  eventEndDate,
@@ -78,10 +79,6 @@ namespace DesafioFaturamento.Manager
 
         private static bool ValidateInputRules(EventsInputLine inputEvent)
         {
-            if (inputEvent.Id == "12")
-            {
-                string breaking = "";
-            }
             //A data_final é obrigatoriamente maior ou igual à data_inicial.
             if (inputEvent.EventEndDate > DateTime.MinValue && inputEvent.EventEndDate <= inputEvent.EventBeginDate)
             {
@@ -124,6 +121,9 @@ namespace DesafioFaturamento.Manager
 
         public static void ValidateMachineEvents(List<MachineEvents> machineEvents)
         {
+            //Validacoes desse tipo ignoram todos os eventos,
+            //ja que nao daria para precisar com certeza a precisao dos eventos e qual seria o evento valido
+
             //Não podem existir duas datas iniciais iguais para um mesmo id.
             //Múltiplos eventos de Período Promocional não podem ter interseção entre o período de suas datas.
             //Uma maquininha só poderá ter um evento de Desativação após uma Ativação.
@@ -166,25 +166,39 @@ namespace DesafioFaturamento.Manager
             }
         }
 
-        public static string ValidateInputCommandPrameters(string[] args)
+        public static InputParameters ValidateInputCommandPrameters(string[] args)
         {
             //expected input: example3.csv
             //First argument should be a valid file
             //Validations fail will throw an exception and the program will abort 
-            if (args.Length == 1 && args[0] == "/?")
+            if (args.Length == 1 && args[0] == "--helpRun")
             {
                 throw new InvalidInputException("");
             }
-            if (args.Length > 1)
+            if (args.Length != 1)
             {
                 throw new InvalidInputException("Numero de parametros invalidos.");
             }
-            string inputFile = args[0];
-            if (!File.Exists(inputFile))
+
+            InputParameters result;
+            if (!bool.TryParse(args[0], out _))
             {
-                throw new InvalidInputException($"Arquivo {inputFile} nao encontrado.");
+                string inputFile = args[0];
+                if (!File.Exists(inputFile))
+                {
+                    throw new InvalidInputException($"Arquivo {inputFile} nao encontrado.");
+                }
+                result = new InputParameters()
+                {
+                    FileName = inputFile,
+                    IsTesting = false,
+                };
             }
-            return inputFile;
+            else
+            {
+                result = FaturamentoBasicTest.TestParameters();
+            }
+            return result;
         }
 
     }

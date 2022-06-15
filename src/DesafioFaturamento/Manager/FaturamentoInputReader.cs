@@ -9,12 +9,13 @@ namespace DesafioFaturamento.Manager
     public static class FaturamentoInputReader
     {
         /// <summary>
-        /// Reads each line the input file and provided an output a list of vesting events grouped by Employee and Award
+        /// Le e chama a validacao linha do arquivo de entrada, e tem como saida os eventos validos agrupados por maquina
         /// </summary>
-        /// <param name="input">Source of vesting informations</param>
-        /// <returns>List of vesting events grouped by Employee and Award</returns>
-        public static List<MachineEvents> ReadVestsFromFile(string fileName)
+        /// <param name="input">Nome do arquivo com as entradas</param>
+        /// <returns>List de maquinas com seus eventos validos</returns>
+        public static List<MachineEvents> ReadVestsFromFile(InputParameters inputParameters)
         {
+            string fileName = inputParameters.FileName;
             List<MachineEvents> result = new List<MachineEvents>();
 
             bool skipFirstLine = true;

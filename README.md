@@ -16,6 +16,15 @@ E executar o comando
 Parametros entre colchetes são opcionais
 
 
+Uma pequena funcionalidade que utilizei na construção para me ajudar nos testes, 
+é rodar o comando da forma
+>dotnet run true
+
+Assim o programa utiliza como arquivo de entrada o csv encontrado na pasta 
+DesafioFaturamento/data, ele contém os mesmos dados de coleta informados na 
+especificação, e valida com a saída esperada.
+
+
 # Decisões ao realizar e documentação
 
 .Net se baseia na linguagem do sistema operacional para tratar string como 

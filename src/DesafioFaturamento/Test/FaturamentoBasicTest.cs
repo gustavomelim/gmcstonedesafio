@@ -69,7 +69,7 @@ namespace DesafioFaturamento.Test
         {
             return new InputParameters()
             {
-                FileName = @"H:\Melim\ProjetosPessoais\CodeChallengesInterviews\stone\gmcstonedesafio\src\DesafioFaturamento\data\testInput02.csv",
+                FileName = @".\data\testInput02.csv",
                 IsTesting = true
             };
         }

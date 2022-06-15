@@ -16,7 +16,7 @@ E executar o comando
 Parametros entre colchetes são opcionais
 
 
-# Decisoes ao realizar e documentacao
+# Decisões ao realizar e documentação
 
 .Net se baseia na linguagem do sistema operacional para tratar string como 
 numero decimais ('.' para casas decimais, e ',' para separador de milhar, e 
